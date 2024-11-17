@@ -4,3 +4,4 @@ __pycache__
 bot_discord/config.py
 .DS_Store
 .vscode
+bot_discord/temp_audio_files
