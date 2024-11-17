@@ -3,3 +3,4 @@
 __pycache__
 bot_discord/config.py
 .DS_Store
+.vscode
