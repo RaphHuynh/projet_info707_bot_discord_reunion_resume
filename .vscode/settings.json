@@ -1,0 +1,5 @@
+{
+    "python.analysis.extraPaths": [
+        "./bot_discord/lib/models"
+    ]
+}
