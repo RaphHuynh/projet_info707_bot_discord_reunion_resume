@@ -10,10 +10,10 @@
 
 <body>
     <header>
-        {% include 'menu_invite.html' %}
+        {% include 'header.html' %}
     </header>
 
-    <main>
+    <main class="flex-grow">
         {% if error %}
         <div class="alert alert-danger" role="alert">
             {{ error }}

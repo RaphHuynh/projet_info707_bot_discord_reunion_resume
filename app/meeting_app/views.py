@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from meeting_app.models import User, Message, Resume
 
 
 def index(request):
@@ -6,7 +7,8 @@ def index(request):
 
 
 def resume(request):
-    return render(request, "resume.html")
+    resumes = Resume.objects.all()
+    return render(request, "resume.html", {"resumes": resumes})
 
 
 def login(request):
