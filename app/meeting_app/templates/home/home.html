@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% block title %}
+Meeting App
+{% endblock %}
+
+{% block main %}
+<!-- Section 1: How It Works -->
+<section class="mb-16"></section>
+<h2 class="text-4xl font-extrabold text-gray-800 mb-8 text-center">How It Works</h2>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+    <div class="bg-white shadow-lg rounded-lg p-8">
+        <h3 class="text-2xl font-bold text-blue-600 mb-4">Add the Bot</h3>
+        <p class="text-gray-700">Invite the Sum'App bot to your Discord server to start recording meetings.</p>
+    </div>
+    <div class="bg-white shadow-lg rounded-lg p-8">
+        <h3 class="text-2xl font-bold text-blue-600 mb-4">Record & Summarize</h3>
+        <p class="text-gray-700">The bot will record your meeting and generate a concise summary.</p>
+    </div>
+    <div class="bg-white shadow-lg rounded-lg p-8">
+        <h3 class="text-2xl font-bold text-blue-600 mb-4">Full Transcriptions</h3>
+        <p class="text-gray-700">View or download complete meeting transcriptions, organized by user.</p>
+    </div>
+</div>
+</section>
+
+<!-- Section 2: Recent Summaries -->
+<section class="mb-16">
+    <h2 class="text-4xl font-extrabold text-gray-800 mb-8 text-center">Recent Meeting Summaries</h2>
+    {% if recent_summaries %}
+    <ul class="space-y-6">
+        {% for summary in recent_summaries %}
+        <li class="bg-white shadow-lg rounded-lg p-6">
+            <h3 class="text-2xl font-bold text-blue-600 mb-4">{{ summary.title }}</h3>
+            <p class="text-gray-700">{{ summary.short_description }}</p>
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p class="text-gray-600 text-center">No recent summaries available. Start by adding the bot to your server!</p>
+    {% endif %}
+</section>
+
+<!-- Section 3: Example Transcription -->
+<section class="mb-16">
+    <h2 class="text-4xl font-extrabold text-gray-800 mb-8 text-center">Example Transcription</h2>
+    <div class="bg-white shadow-lg rounded-lg p-8">
+        <ul class="space-y-6">
+            <li class="flex items-start">
+                <div class="text-blue-600 font-bold mr-4">[John]:</div>
+                <p class="text-gray-700">Hey everyone, welcome to the meeting!</p>
+            </li>
+            <li class="flex items-start">
+                <div class="text-blue-600 font-bold mr-4">[Jane]:</div>
+                <p class="text-gray-700">Thanks, John. I’ll go over the agenda quickly.</p>
+            </li>
+            <li class="flex items-start">
+                <div class="text-blue-600 font-bold mr-4">[Sam]:</div>
+                <p class="text-gray-700">Sounds good. Let’s start with the first point.</p>
+            </li>
+        </ul>
+    </div>
+</section>
+
+<!-- Call to Action -->
+<section class="text-center mb-16">
+    <h2 class="text-4xl font-extrabold text-gray-800 mb-8">Ready to Simplify Your Meetings?</h2>
+    <a href="/"
+        class="inline-block bg-blue-600 text-white font-bold px-8 py-4 rounded-lg shadow-lg hover:bg-blue-700 transition duration-300">
+        Add the Bot to Your Server
+    </a>
+</section>
+
+{% endblock %}
