@@ -4,7 +4,7 @@ import datetime
 import whisper
 from lib.models import FileRegister, Message
 
-async def handle_finished_recording(sink, model,ctx):
+async def handle_finished_recording(sink, ctx):
     # Définir un répertoire temporaire pour stocker les fichiers audio
     temp_dir = "./temp_audio_files"
     os.makedirs(temp_dir, exist_ok=True)
@@ -23,7 +23,7 @@ async def handle_finished_recording(sink, model,ctx):
             f.write(audio.file.read())
 
         # Transcrire l'audio avec Whisper
-        result = model.transcribe(file_path, language="fr")  # Ajustez `language` si nécessaire
+        result = model.transcribe(file_path, language="fr")
         
         # Ajouter les segments transcrits avec leurs horodatages
         for segment in result["segments"]:
