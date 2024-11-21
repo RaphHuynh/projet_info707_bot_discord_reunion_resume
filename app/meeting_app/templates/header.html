@@ -28,36 +28,17 @@
         </form>
 
         {% if user.is_authenticated %}
-        <div class="relative">
-            <button id="dropdownDefaultButton" data-dropdown-toggle="dropdown"
-                class="text-gray-600 hover:text-gray-900 focus:outline-none flex items-center">
-                <img src="https://cdn.discordapp.com/avatars/{{ user.id }}/{{ user.avatar }}" alt="{{ user.username }}"
-                    class="h-8 w-8 rounded-full mr-2" />
-                <span>{{ user.global_name }}</span>
-                <svg class="ml-1 h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                    stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                </svg>
-            </button>
-
-            <div id="dropdown" class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-20 hidden">
-                <ul class="py-2 text-sm text-gray-700" aria-labelledby="dropdownDefaultButton">
-                    <li>
-                        <a href="#" class="block px-4 py-2 hover:bg-gray-100">Dashboard</a>
-                    </li>
-                    <li>
-                        <a href="#" class="block px-4 py-2 hover:bg-gray-100">Settings</a>
-                    </li>
-                    <li>
-                        <a href="#" class="block px-4 py-2 hover:bg-gray-100">Earnings</a>
-                    </li>
-                    <li>
-                        <a href="{% url 'oauth_logout' %}" class="block px-4 py-2 hover:bg-gray-100">Logout</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-
+        <button id="dropdownDefaultButton" data-dropdown-toggle="dropdown"
+            class="text-gray-600 hover:text-gray-900 focus:outline-none flex items-center">
+            <img src="https://cdn.discordapp.com/avatars/{{ user.id }}/{{ user.avatar }}" alt="{{ user.username }}"
+                class="h-8 w-8 rounded-full mr-2" />
+            <span>{{ user.global_name }}</span>
+            <svg class="ml-1 h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+        </button>
+        <a href="{% url 'oauth_logout' %}" class="text-sm text-gray-700 block px-4 py-2 hover:bg-gray-100">Logout</a>
         {% else %}
         <a href="{% url 'oauth_login' %}" class="text-gray-600 hover:text-gray-900 ml-4">
             Login/Register
