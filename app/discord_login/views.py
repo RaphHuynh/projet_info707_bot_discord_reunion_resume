@@ -4,7 +4,7 @@ from django.shortcuts import redirect
 import requests
 from django.contrib.auth.decorators import user_passes_test
 
-auth_url_discord = "https://discord.com/oauth2/authorize?client_id=1305370475060531240&response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A8000%2Foauth2%2Flogin%2Fredirect&scope=identify"
+auth_url_discord = "https://discord.com/oauth2/authorize?client_id=1305611546755338291&response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A8000%2Foauth2%2Flogin%2Fredirect&scope=identify"
 
 
 @user_passes_test(test_func=lambda u: not u.is_authenticated, login_url="/")
@@ -32,8 +32,8 @@ def discord_logout(request: HttpRequest):
 
 def exchange_code(code: str):
     data = {
-        "client_id": "1305370475060531240",
-        "client_secret": "5LLixQaXZlGfd5bvLwagpDVCbHCb-vpT",
+        "client_id": "1305611546755338291",
+        "client_secret": "qrHiseMUv4EXFaNUulRUTb_DM8JYzoIb",
         "grant_type": "authorization_code",
         "code": code,
         "redirect_uri": "http://localhost:8000/oauth2/login/redirect",

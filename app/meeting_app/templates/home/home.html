@@ -5,7 +5,7 @@ Meeting App
 
 {% block main %}
 <!-- Section 1: How It Works -->
-<section class="flex items-center justify-center flex-col h-screen px-10 bg-gradient-to-r from-purple-100 via-white to-white">
+<section class="fixed flex items-center justify-center flex-col h-screen px-10 bg-gradient-to-r from-purple-100 via-white to-white">
     <h2 class="text-gray-800 mb-6 text-center text-8xl font-bold w-3/4">
         <span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-500 to-red-500">Transcribe</span> and <span class="text-red-500">summarise</span> your <span class="text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-pink-500 to-purple-400">discord meetings</span>
     </h2>
@@ -13,62 +13,17 @@ Meeting App
         The best bot discord for automatically transcribing and producing meeting summaries. You can even retrieve all your meeting summaries from our site.
     </p>
     <div class="flex justify-center items-center gap-4">
-        <a href="" class="bg-black text-white px-4 py-2 rounded-full text-lg">
+        <a href="" class="bg-black text-white px-4 py-2 rounded text-lg">
             Add Sum'App
         </a>
         <p class="text-lg">or</p>
-        <a href="" class="bg-black text-white px-4 py-2 rounded-full text-lg">
+        <a href="" class="bg-black text-white px-4 py-2 rounded text-lg">
             View Summary
         </a>
     </div>
+
+    <a href="{% url 'tutorial' %}" class="fixed bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 rounded text-white px-4 py-2 text-lg bottom-5 right-5">Tutorial</a>
     
-</section>
-
-<!-- Section 2: Recent Summaries -->
-<section class="mb-16">
-    <h2 class="text-4xl font-extrabold text-gray-800 mb-8 text-center">Recent Meeting Summaries</h2>
-    {% if recent_summaries %}
-    <ul class="space-y-6">
-        {% for summary in recent_summaries %}
-        <li class="bg-white shadow-lg rounded-lg p-6">
-            <h3 class="text-2xl font-bold text-blue-600 mb-4">{{ summary.title }}</h3>
-            <p class="text-gray-700">{{ summary.short_description }}</p>
-        </li>
-        {% endfor %}
-    </ul>
-    {% else %}
-    <p class="text-gray-600 text-center">No recent summaries available. Start by adding the bot to your server!</p>
-    {% endif %}
-</section>
-
-<!-- Section 3: Example Transcription -->
-<section class="mb-16">
-    <h2 class="text-4xl font-extrabold text-gray-800 mb-8 text-center">Example Transcription</h2>
-    <div class="bg-white shadow-lg rounded-lg p-8">
-        <ul class="space-y-6">
-            <li class="flex items-start">
-                <div class="text-blue-600 font-bold mr-4">[John]:</div>
-                <p class="text-gray-700">Hey everyone, welcome to the meeting!</p>
-            </li>
-            <li class="flex items-start">
-                <div class="text-blue-600 font-bold mr-4">[Jane]:</div>
-                <p class="text-gray-700">Thanks, John. I’ll go over the agenda quickly.</p>
-            </li>
-            <li class="flex items-start">
-                <div class="text-blue-600 font-bold mr-4">[Sam]:</div>
-                <p class="text-gray-700">Sounds good. Let’s start with the first point.</p>
-            </li>
-        </ul>
-    </div>
-</section>
-
-<!-- Call to Action -->
-<section class="text-center mb-16">
-    <h2 class="text-4xl font-extrabold text-gray-800 mb-8">Ready to Simplify Your Meetings?</h2>
-    <a href="/"
-        class="inline-block bg-blue-600 text-white font-bold px-8 py-4 rounded-lg shadow-lg hover:bg-blue-700 transition duration-300">
-        Add the Bot to Your Server
-    </a>
 </section>
 
 {% endblock %}
