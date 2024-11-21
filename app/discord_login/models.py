@@ -9,6 +9,7 @@ class DiscordUser(models.Model):
     discord_tag = models.CharField(max_length=100)
     avatar = models.CharField(max_length=100)
     public_flags = models.IntegerField()
+    global_name = models.CharField(max_length=100)
     flags = models.IntegerField()
     locale = models.CharField(max_length=100)
     mfa_enabled = models.BooleanField()
