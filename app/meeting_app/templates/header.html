@@ -1,44 +1,47 @@
 {% load static %}
-<nav class="bg-white shadow-md fixed top-0 left-0 w-full z-50"></nav>
-<div class="container mx-auto px-4 py-3 flex justify-between items-center">
-    <!-- Logo and App Title -->
-    <div class="text-gray-800 text-2xl font-bold">
-        <a href="{% url 'home' %}" class="flex items-center">
-            <!-- Replace 'logo.png' with your logo file in the static folder -->
-            <img src="{% static 'images/logo.png' %}" alt="App Logo" class="h-6 mr-2">
-            Sum'App
-        </a>
-    </div>
+<nav class="bg-white shadow-md fixed top-0 left-0 w-full z-50">
+    <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+        <div class="text-gray-800 text-2xl font-bold">
+            <a href="{% url 'home' %}" class="flex items-center">
+                <img src="{% static 'images/logo.png' %}" alt="App Logo" class="h-6 mr-2">
+                Sum'App
+            </a>
+        </div>
 
-    <!-- Navigation Links -->
-    <div class="flex space-x-6 items-center">
-        <a href="{% url 'tutorial' %}" class="text-gray-600 hover:text-gray-900">Tutorial</a>
-        <a href="{% url 'summaries' %}" class="text-gray-600 hover:text-gray-900">Meeting Summaries</a>
-        <a href="{% url 'public_meetings' %}" class="text-gray-600 hover:text-gray-900">Public Meetings</a>
-    </div>
+        <div class="flex space-x-6 items-center">
+            <a href="{% url 'tutorial' %}" class="text-gray-600 hover:text-gray-900">Tutorial</a>
+            <a href="{% url 'summaries' %}" class="text-gray-600 hover:text-gray-900">Meeting Summaries</a>
+            <a href="{% url 'public_meetings' %}" class="text-gray-600 hover:text-gray-900">Public Meetings</a>
+        </div>
 
-    <!-- Search Bar -->
-    <form action="{% url 'search_summaries' %}" method="GET" class="flex items-center bg-gray-100 rounded-lg px-3 py-1">
-        <input type="text" name="query" placeholder="Search summaries..."
-            class="bg-transparent focus:outline-none text-sm text-gray-700 px-2">
-        <button type="submit" class="text-gray-500 hover:text-gray-800 ml-2">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                <path fill-rule="evenodd"
-                    d="M12.9 14.32a8 8 0 111.414-1.414l4.387 4.387a1 1 0 01-1.414 1.414l-4.387-4.387zm-6.9-5.32a6 6 0 1112 0 6 6 0 01-12 0z"
-                    clip-rule="evenodd" />
+        <form action="{% url 'search_summaries' %}" method="GET"
+            class="flex items-center bg-gray-100 rounded-lg px-3 py-1">
+            <input type="text" name="query" placeholder="Search summaries..."
+                class="bg-transparent focus:outline-none text-sm text-gray-700 px-2">
+            <button type="submit" class="text-gray-500 hover:text-gray-800 ml-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd"
+                        d="M12.9 14.32a8 8 0 111.414-1.414l4.387 4.387a1 1 0 01-1.414 1.414l-4.387-4.387zm-6.9-5.32a6 6 0 1112 0 6 6 0 01-12 0z"
+                        clip-rule="evenodd" />
+                </svg>
+            </button>
+        </form>
+
+        {% if user.is_authenticated %}
+        <button class="text-gray-600 hover:text-gray-900 focus:outline-none flex items-center">
+            <img src="https://cdn.discordapp.com/avatars/{{ user.id }}/{{ user.avatar }}" alt="{{ user.username }}"
+                class="h-8 w-8 rounded-full mr-2" />
+            <span>{{ user.global_name }}</span>
+            <svg class="ml-1 h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
             </svg>
         </button>
-    </form>
-
-    <!-- Login/Register -->
-    {% if user.is_authenticated %}
-    <a href="{% url 'logout' %}" class="text-gray-600 hover:text-gray-900 ml-4">
-        Logout
-    </a>
-    {% else %}
-    <a href="{% url 'login' %}" class="text-gray-600 hover:text-gray-900 ml-4">
-        Login/Register
-    </a>
-    {% endif %}
-</div>
+        <a href="{% url 'oauth_logout' %}" class="text-sm text-gray-700 block px-4 py-2 hover:bg-gray-100">Logout</a>
+        {% else %}
+        <a href="{% url 'oauth_login' %}" class="text-gray-600 hover:text-gray-900 ml-4">
+            Login/Register
+        </a>
+        {% endif %}
+    </div>
 </nav>

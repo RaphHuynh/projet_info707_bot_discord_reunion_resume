@@ -29,7 +29,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
+AUTHENTICATION_BACKENDS = [
+    "discord_login.auth.DiscordAuthentificationBacken",
+]
 # Application definition
 
 INSTALLED_APPS = [
@@ -40,6 +42,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "meeting_app",
+    "discord_login",
 ]
 
 MIDDLEWARE = [
