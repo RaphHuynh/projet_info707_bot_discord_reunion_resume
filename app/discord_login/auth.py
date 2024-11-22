@@ -6,6 +6,7 @@ class DiscordAuthentificationBacken(BaseBackend):
     def authenticate(self, request, user):
         try:
             find_user = DiscordUser.objects.get(id=user["id"])
+            find_user.update_discord_user(user)
         except DiscordUser.DoesNotExist:
             new_user = DiscordUser.objects.create_new_discord_user(user=user)
             print(f"New user created : {new_user.discord_tag}")
