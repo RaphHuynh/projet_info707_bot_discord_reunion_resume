@@ -1,20 +1,27 @@
 {% extends 'base.html' %}
+{% load custom_filters %}
 {% block title %}
 Sum'App - Summaries
 {% endblock %}
 
 {% block main %}
-<h1>Meeting Summaries</h1>
-<div>
-    {% for summary in summaries %}
-    <a href="/summary/{{ summary.id }}">
-        <div>
-            <div>{{ summary.title }}</div>
-            <div>{{ summary.date }}</div>
-            <div>{{ summary.duration }}</div>
-            <div>{{ summary.admin.global_name }}</div>
-        </div>
-    </a>
-    {% endfor %}
-</div>
+<section class="flex flex-col items-center justify-center px-64 py-4">
+        <h1 class="text-5xl font-bold text-center my-10">Meeting Summaries</h1>
+        {% for summary in summaries %}
+        <a href="/summary/{{ summary.id }}" class="mb-10">
+            <article class="bg-stone-50 p-6 rounded shadow-lg hover:bg-gradient-to-r hover:from-purple-100 hover:via-pink-200 hover:to-red-200">
+                <div class="mb-5"><span class="bg-pink-200 text-pink-500 rounded px-2 py-1 text-200">Date</span> : {{ summary.date }}</div>
+                <h2 class="uppercase font-bold text-2xl my-2">{{ summary.title }}</h2>
+                <p class="mb-8">
+                    {{ summary.text_sum_up|truncatechars:200 }}
+                </p>
+                <aside class="flex items-center gap-2">
+                    <img src="https://cdn.discordapp.com/avatars/{{ summary.admin.id }}/{{  summary.admin.avatar }}" class="h-10 rounded-full w-10"></img>
+                    <p class="">by {{ summary.admin.global_name }}</p>
+                </aside>
+            </article>
+        </a>
+        {% endfor %}
+</section>
 {% endblock %}
+
