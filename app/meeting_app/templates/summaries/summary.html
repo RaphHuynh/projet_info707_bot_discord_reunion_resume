@@ -5,32 +5,44 @@ Sum'App - Summary
 
 {% block main %}
 
-<h1>{{ summary.title }}</h1>
+<section class="px-20 flex flex-col min-h-screen">
+    <h1 class="text-5xl font-bold text-center pt-10 text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-500 to-red-500">{{ summary.title }}</h1>
+    <p class="text-center italic mb-10 text-slate-500">{{ summary.date }}</p>
 
-<h2>Participants</h2>
-<ul>
-    {% for attendee in summary.attendees.all %}
-    <li>{{ attendee.global_name }}</li>
-    {% endfor %}
-</ul>
+    <article class="flex gap-4">
+        <div class="bg-slate-50 rounded shadow w-full p-10">
+            <h2 class="text-red-500 text-2xl font-bold text-center mb-4">Participants</h2>
+            <div class="">
+                {% for attendee in summary.attendees.all %}
+                    <div class="flex items-center mb-2">
+                        <img src="https://cdn.discordapp.com/avatars/{{ attendee.id }}/{{ attendee.avatar }}" class="h-10 w-10 rounded-full mr-2"></img>
+                        <span class="">{{ attendee.global_name }}</span>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="bg-slate-50 p-10 shadow">
+            <h2 class="text-red-500 text-2xl font-bold text-center mb-4">Résumé</h2>
+            <p class="text-justify">{{ summary.text_sum_up }}</p>
+        </div>
+    </article>
 
-<summary>{{ summary.text_sum_up}}</summary>
+    <article class="w-full flex flex-col bg-slate-50 mt-4 p-10 shadow">
+        <h2 class="text-red-500 text-2xl font-bold text-center mb-4">Transcription complète</h2>
+        {% for message in summary.messages.all %}
+        {% if message.author.id == user.id %}
+        <p class="bg-green-500 px-4 py-2 text-white rounded-xl w-fit text-lg shadow-lg mt-2">{{ message.content }} </p>
+        <p class="text-sm text-slate-500 italic mt-2">{{ message.date }} {{ message.author.global_name }}</p>
+        {% else %}
+        <p class="bg-slate-800 px-4 py-2 text-white rounded-xl w-fit text-lg mr-0 ml-auto shadow-lg mt-2">{{ message.content }} </p>
+        <p class="text-sm text-slate-500 italic mr-0 ml-auto mt-2">{{ message.date }} {{ message.author.global_name }}</p>
+        {% endif %}
+        {% endfor %}
+    </article>
 
-<div>
-    {% for message in summary.messages.all %}
-    {% if message.author.id == user.id %}
-    <div>{{ message.content }}</div>
-    <div>{{ message.date }}</div>
-    <div>{{ message.author.global_name }}</div>
-    {% else %}
-    <div>{{ message.content }}</div>
-    <div>{{ message.date }}</div>
-    <div>{{ message.author.global_name }}</div>
-    {% endif %}
-    {% endfor %}
-</div>
+    <div class="mx-auto bg-black text-white px-4 py-2 rounded mt-10">
+        <a href="javascript:history.back()">Back</a>
+    </div>
 
-<div>
-    <a href="javascript:history.back()">Back</a>
-</div>
+</section>
 {% endblock %}
