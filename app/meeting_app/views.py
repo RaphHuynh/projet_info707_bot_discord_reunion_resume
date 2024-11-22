@@ -26,14 +26,12 @@ def tutorial(request):
     return render(request, "tutorial/tutorial.html")
 
 
-def search_summaries(request):
-    searched_summary = Resume.objects.all()
-    return render(
-        request,
-        "summaries/summaries.html",
-        {"summaries": searched_summary},
-    )
+def my_summaries(request):
+    user_summaries = Resume.objects.filter(attendees=request.user)
+    return render(request, "summaries/summaries.html", {"summaries": user_summaries})
 
+def profile(request):
+    return render(request, "profile/profile.html")
 
 def summaries(request):
     my_summaries = Resume.objects.all()
@@ -44,10 +42,6 @@ def summaries(request):
     )
 
 
-def public_meetings(request):
-    my_summaries = Resume.objects.all()
-    return render(
-        request,
-        "summaries/summaries.html",
-        {"summaries": my_summaries},
-    )
+def summary(request, id):
+    summary = Resume.objects.get(id=id)
+    return render(request, "summaries/summary.html", {"summary": summary})

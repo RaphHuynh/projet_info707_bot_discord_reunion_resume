@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block title %}
+Meeting App - Summary
+{% endblock %}
+
+{% block main %}
+<h1>{{ summary.title }}</h1>
+
+<summary>{{ summary.text_sum_up}}</summary>
+
+<ul>
+    {% for message in summary.messages.all %}
+    <li>{{ message.content }}</li>
+    <li>{{ message.date }}</li>
+    <li>{{ message.author.global_name }}</li>
+    {% endfor %}
+
+</ul>
+
+<a href="javascript:history.back()">Back</a>
+{% endblock %}
