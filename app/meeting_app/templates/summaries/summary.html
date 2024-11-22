@@ -7,6 +7,13 @@ Sum'App - Summary
 
 <h1>{{ summary.title }}</h1>
 
+<h2>Participants</h2>
+<ul>
+    {% for attendee in summary.attendees.all %}
+    <li>{{ attendee.global_name }}</li>
+    {% endfor %}
+</ul>
+
 <summary>{{ summary.text_sum_up}}</summary>
 
 <div>
