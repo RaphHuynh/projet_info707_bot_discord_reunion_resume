@@ -15,6 +15,10 @@ Sum'App - Summary
     <div>{{ message.content }}</div>
     <div>{{ message.date }}</div>
     <div>{{ message.author.global_name }}</div>
+    {% else %}
+    <div>{{ message.content }}</div>
+    <div>{{ message.date }}</div>
+    <div>{{ message.author.global_name }}</div>
     {% endif %}
     {% endfor %}
 </div>
