@@ -1,5 +1,5 @@
 import discord
-from config import *
+from config import TOKEN, ID_SERVEUR
 from commands import register_commands
 from events import register_events
 

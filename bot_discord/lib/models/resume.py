@@ -1,9 +1,15 @@
-from typing import Optional
 from pydantic import BaseModel
+import datetime
+
 
 class Resume(BaseModel):
-    id: int
-    text_resume: str
-    text_complete: str
-    users: Optional[list]
-    messages: Optional[list]
+    title: str
+    date: datetime.datetime
+    duration: datetime.timedelta
+
+    text_sum_up: str
+
+    messages: list
+    attendees: list
+
+    admin: int
