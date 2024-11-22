@@ -6,12 +6,12 @@ Sum'App - Summary
 {% block main %}
 
 <section class="px-20 flex flex-col min-h-screen">
-    <h1 class="text-5xl font-bold text-center pt-10 text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-500 to-red-500">{{ summary.title }}</h1>
+    <h1 class="text-5xl font-bold text-center pt-10 text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-sky-500 to-green-500">{{ summary.title }}</h1>
     <p class="text-center italic mb-10 text-slate-500">{{ summary.date }}</p>
 
     <article class="flex gap-4">
         <div class="bg-slate-50 rounded shadow w-full p-10">
-            <h2 class="text-red-500 text-2xl font-bold text-center mb-4">Participants</h2>
+            <h2 class="text-sky-500 text-2xl font-bold text-center mb-4">Participants</h2>
             <div class="">
                 {% for attendee in summary.attendees.all %}
                     <div class="flex items-center mb-2">
@@ -22,16 +22,16 @@ Sum'App - Summary
             </div>
         </div>
         <div class="bg-slate-50 p-10 shadow">
-            <h2 class="text-red-500 text-2xl font-bold text-center mb-4">Résumé</h2>
+            <h2 class="text-sky-500 text-2xl font-bold text-center mb-4">Résumé</h2>
             <p class="text-justify">{{ summary.text_sum_up }}</p>
         </div>
     </article>
 
     <article class="w-full flex flex-col bg-slate-50 mt-4 p-10 shadow">
-        <h2 class="text-red-500 text-2xl font-bold text-center mb-4">Transcription complète</h2>
+        <h2 class="text-sky-500 text-2xl font-bold text-center mb-4">Transcription complète</h2>
         {% for message in summary.messages.all %}
         {% if message.author.id == user.id %}
-        <p class="bg-green-500 px-4 py-2 text-white rounded-xl w-fit text-lg shadow-lg mt-2">{{ message.content }} </p>
+        <p class="bg-cyan-500 px-4 py-2 text-white rounded-xl w-fit text-lg shadow-lg mt-2">{{ message.content }} </p>
         <p class="text-sm text-slate-500 italic mt-2">{{ message.date }} {{ message.author.global_name }}</p>
         {% else %}
         <p class="bg-slate-800 px-4 py-2 text-white rounded-xl w-fit text-lg mr-0 ml-auto shadow-lg mt-2">{{ message.content }} </p>
