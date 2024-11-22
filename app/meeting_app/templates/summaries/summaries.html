@@ -12,9 +12,7 @@ Sum'App - Summaries
             <div>{{ summary.title }}</div>
             <div>{{ summary.date }}</div>
             <div>{{ summary.duration }}</div>
-            {% for attendee in summary.attendees.all %}
-            <div>{{ attendee.global_name }}</div>
-            {% endfor %}
+            <div>{{ summary.admin.global_name }}</div>
         </div>
     </a>
     {% endfor %}

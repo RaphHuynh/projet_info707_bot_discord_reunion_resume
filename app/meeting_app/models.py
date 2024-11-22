@@ -22,5 +22,7 @@ class Resume(models.Model):
 
     text_sum_up = models.TextField()
 
-    attendees = models.ManyToManyField(DiscordUser)
     messages = models.ManyToManyField(Message)
+    attendees = models.ManyToManyField(DiscordUser, related_name='attending_resumes')
+
+    admin = models.ForeignKey(DiscordUser, on_delete=models.CASCADE, related_name='admin_resumes')
