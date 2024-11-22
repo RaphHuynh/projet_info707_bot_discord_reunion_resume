@@ -1,19 +1,22 @@
 {% extends 'base.html' %}
 {% block title %}
-Meeting App - Summaries
+Sum'App - Summaries
 {% endblock %}
 
 {% block main %}
 <h1>Meeting Summaries</h1>
-<ul>
+<div>
     {% for summary in summaries %}
-    <li><a href="/summary/{{ summary.id }}">{{ summary.title }}</a></li>
-    <li>{{ summary.date }}</li>
-    <li>{{ summary.duration }}</li>
-    {% for attendee in summary.attendees.all %}
-    <li>{{ attendee.global_name }}</li>
+    <a href="/summary/{{ summary.id }}">
+        <div>
+            <div>{{ summary.title }}</div>
+            <div>{{ summary.date }}</div>
+            <div>{{ summary.duration }}</div>
+            {% for attendee in summary.attendees.all %}
+            <div>{{ attendee.global_name }}</div>
+            {% endfor %}
+        </div>
+    </a>
     {% endfor %}
-    {% endfor %}
-    
-</ul>
+</div>
 {% endblock %}

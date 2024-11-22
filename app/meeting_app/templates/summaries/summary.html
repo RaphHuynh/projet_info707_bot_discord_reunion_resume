@@ -1,21 +1,25 @@
 {% extends 'base.html' %}
 {% block title %}
-Meeting App - Summary
+Sum'App - Summary
 {% endblock %}
 
 {% block main %}
+
 <h1>{{ summary.title }}</h1>
 
 <summary>{{ summary.text_sum_up}}</summary>
 
-<ul>
+<div>
     {% for message in summary.messages.all %}
-    <li>{{ message.content }}</li>
-    <li>{{ message.date }}</li>
-    <li>{{ message.author.global_name }}</li>
+    {% if message.author.id == user.id %}
+    <div>{{ message.content }}</div>
+    <div>{{ message.date }}</div>
+    <div>{{ message.author.global_name }}</div>
+    {% endif %}
     {% endfor %}
+</div>
 
-</ul>
-
-<a href="javascript:history.back()">Back</a>
+<div>
+    <a href="javascript:history.back()">Back</a>
+</div>
 {% endblock %}
