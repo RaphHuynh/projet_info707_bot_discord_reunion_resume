@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block title %}
+Sum'App - Summary
+{% endblock %}
+
+{% block main %}
+
+<h1>{{ summary.title }}</h1>
+
+<h2>Participants</h2>
+<ul>
+    {% for attendee in summary.attendees.all %}
+    <li>{{ attendee.global_name }}</li>
+    {% endfor %}
+</ul>
+
+<summary>{{ summary.text_sum_up}}</summary>
+
+<div>
+    {% for message in summary.messages.all %}
+    {% if message.author.id == user.id %}
+    <div>{{ message.content }}</div>
+    <div>{{ message.date }}</div>
+    <div>{{ message.author.global_name }}</div>
+    {% else %}
+    <div>{{ message.content }}</div>
+    <div>{{ message.date }}</div>
+    <div>{{ message.author.global_name }}</div>
+    {% endif %}
+    {% endfor %}
+</div>
+
+<div>
+    <a href="javascript:history.back()">Back</a>
+</div>
+{% endblock %}

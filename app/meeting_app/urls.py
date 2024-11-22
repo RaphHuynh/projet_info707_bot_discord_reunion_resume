@@ -7,6 +7,7 @@ urlpatterns = [
     path("login", views.login, name="login"),
     path("tutorial/", views.tutorial, name="tutorial"),
     path("summaries/", views.summaries, name="summaries"),
-    path("public-meetings/", views.public_meetings, name="public_meetings"),
-    path("search/", views.search_summaries, name="search_summaries"),
+    path("my_summaries/", views.my_summaries, name="my_summaries"),
+    path("summary/<int:id>/", views.summary, name="summary"),
+    path("profile", views.profile, name="profile"),
 ]
