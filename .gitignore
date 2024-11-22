@@ -1,6 +1,7 @@
 .venv
 .conda
 __pycache__
+migrations
 bot_discord/config.py
 .DS_Store
 .vscode

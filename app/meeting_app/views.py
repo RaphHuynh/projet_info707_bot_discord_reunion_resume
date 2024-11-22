@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from meeting_app.models import User, Message, Resume
+from meeting_app.models import Resume
 
 
 def home(request):
