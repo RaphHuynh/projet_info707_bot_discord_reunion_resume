@@ -21,7 +21,7 @@ async def handle_finished_recording(sink, ctx, title):
 
     resume = Resume(
         date=messages[0].date,
-        duration=messages[-1].date - messages[0].date,
+        duration=(messages[-1].date - messages[0].date).total_seconds(),
         messages=messages,
         attendees=attendees,
         title=title,
