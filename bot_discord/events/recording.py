@@ -5,15 +5,13 @@ from lib.models import Message, User, Resume
 import sqlite3
 
 
-async def handle_finished_recording(sink, ctx):
+async def handle_finished_recording(sink, ctx, title):
     if len(sink.audio_data) == 0:
-        await ctx.send("Aucune donnée audio enregistrée.")
+        await ctx.send("No audio data recorded")
         await ctx.voice_client.disconnect()
         return
 
-    await ctx.respond(
-        "Fin de l'enregistrement, transcription en cours...", ephemeral=True
-    )
+    await ctx.respond("I will now disconnect and transcribe the audio", ephemeral=True)
     await ctx.voice_client.disconnect()
 
     transcriptions = transcribe_audio(sink)
@@ -26,16 +24,21 @@ async def handle_finished_recording(sink, ctx):
         duration=messages[-1].date - messages[0].date,
         messages=messages,
         attendees=attendees,
-        title="Réunion",
+        title=title,
         text_sum_up="Réunion de test",
         admin=author,
     )
 
-    answer = formated_transcription(ctx, transcriptions)
-    await ctx.send(
-        f"Transcription des interventions dans l'ordre chronologique :\n```\n{answer}\n```"
-    )
-
+    answers = formated_transcription(ctx, transcriptions)
+    await ctx.send("Transcription of the meeting:")
+    text = ""
+    for answer in answers:
+        if len(text) + len(answer) < 1900:
+            text += answer + "\n"
+        else:
+            await ctx.send(f"```{text}```")
+            text = answer + "\n"
+    await ctx.send(f"```{text}```")
     save_to_db(resume)
 
 
@@ -124,7 +127,7 @@ def formated_transcription(ctx, transcriptions):
             f"{idx}. [{user_name}] ({segment['start']:.2f}-{segment['end']:.2f}s): {segment['text']}"
         )
 
-    return "\n".join(transcription_text)
+    return transcription_text
 
 
 def save_users_to_db(sqlite_connection, users):

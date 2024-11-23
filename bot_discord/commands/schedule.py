@@ -54,7 +54,7 @@ async def schedule_command(ctx, channel_id, date: str, title: str):
     if not await join_specific_channel_command(ctx, channel):
         return
 
-    if not await play_on_channel_command(ctx, channel):
+    if not await play_on_channel_command(ctx, channel, title):
         return
 
     await ctx.respond("Meeting started", ephemeral=True)
