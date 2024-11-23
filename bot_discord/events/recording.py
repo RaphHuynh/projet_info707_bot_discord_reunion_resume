@@ -11,7 +11,9 @@ async def handle_finished_recording(sink, ctx):
         await ctx.voice_client.disconnect()
         return
 
-    await ctx.respond("Fin de l'enregistrement, transcription en cours...")
+    await ctx.respond(
+        "Fin de l'enregistrement, transcription en cours...", ephemeral=True
+    )
     await ctx.voice_client.disconnect()
 
     transcriptions = transcribe_audio(sink)
@@ -128,13 +130,12 @@ def formated_transcription(ctx, transcriptions):
 def save_users_to_db(sqlite_connection, users):
     users_id = []
     for user in users:
-        print(f"Saving user {user.global_name}")
-
         user_exist = sqlite_connection.execute(
             f"SELECT * FROM discord_login_discorduser WHERE id = {user.id}"
         ).fetchone()
         if user_exist:
             continue
+        print(f"Saving user {user.global_name}")
         sqlite_connection.execute(
             f"INSERT INTO discord_login_discorduser (id, discord_tag, avatar, global_name) VALUES ({user.id}, '{user.discord_tag}', '{user.avatar}', '{user.global_name.replace("'", "''")}')"
         )
