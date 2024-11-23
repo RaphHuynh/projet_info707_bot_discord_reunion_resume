@@ -1,5 +1,6 @@
 from pydantic import BaseModel
 import datetime
+from .user import User
 
 
 class Resume(BaseModel):
@@ -12,4 +13,4 @@ class Resume(BaseModel):
     messages: list
     attendees: list
 
-    admin: int
+    admin: User
