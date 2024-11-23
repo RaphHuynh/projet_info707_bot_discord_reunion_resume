@@ -78,7 +78,9 @@ def messages_from_transcriptions(transcriptions):
             Message(
                 author_id=segment["user_id"],
                 date=datetime.datetime.now(),
-                duration=datetime.timedelta(seconds=segment["end"] - segment["start"]),
+                duration=datetime.timedelta(
+                    seconds=segment["end"] - segment["start"]
+                ).total_seconds(),
                 content=segment["text"],
             )
         )
