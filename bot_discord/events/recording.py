@@ -7,6 +7,10 @@ import sqlite3
 
 
 async def handle_finished_recording(sink, ctx):
+    if len(sink.audio_data) == 0:
+        await ctx.voice_client.disconnect()
+        return await ctx.send("Aucune donnée audio enregistrée.")
+
     # Définir un répertoire temporaire pour stocker les fichiers audio
     temp_dir = "./temp_audio_files"
     os.makedirs(temp_dir, exist_ok=True)
