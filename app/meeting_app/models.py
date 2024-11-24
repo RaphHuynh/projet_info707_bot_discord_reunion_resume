@@ -8,7 +8,7 @@ class Message(models.Model):
     author = models.ForeignKey(DiscordUser, on_delete=models.CASCADE)
 
     date = models.DateTimeField()
-    duration = models.DurationField()
+    duration = models.FloatField()
 
     content = models.TextField()
 
@@ -18,7 +18,7 @@ class Resume(models.Model):
 
     title = models.CharField(max_length=50)
     date = models.DateTimeField()
-    duration = models.DurationField()
+    duration = models.FloatField()
 
     text_sum_up = models.TextField()
 
