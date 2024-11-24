@@ -48,8 +48,8 @@ Sum'App - Profile
         </article>
     </div>
     <div class="">
-        <h3 class="text-lg font-bold">Répartition des réunions</h3>
-        <div class="overflow-x-auto">
+        <h3 class="text-lg font-bold my-2">Répartition des réunions</h3>
+        <div class="overflow-x-auto flex justify-center">
             <table role="grid" aria-readonly="true" class="border-spacing-1 overflow-hidden relative">
                 <thead>
                     <tr class="h-6">
@@ -66,23 +66,22 @@ Sum'App - Profile
                     {% for line, day in heatmap %}
                     <tr class="">
                         <!-- Colonne avec les jours -->
-                        <td class="ContributionCalendar-day p-0 text-right pr-2 text-[12px] font-bold flex items-center">
+                        <td class="ContributionCalendar-day text-right pr-2 text-[12px] font-bold">
                             {{ day }}
                         </td>
                         <!-- Colonnes de la heatmap -->
                         {% for value in line %}
-                        <td class="ContributionCalendar-day w-[30px] h-[30px] p-0 relative">
-                            <svg class="absolute left-0 top-0 w-[20px] h-[20px]">
+                        <td class="ContributionCalendar-day relative">
                                 {% if value == 0 %}
-                                <rect width="40" height="40" fill="#ebedf0"></rect>
+                                <p class="bg-[#ebedf0] p-3"></p>
                                 {% elif value == 1 %}
-                                <rect width="40" height="40" fill="#cce5ff"></rect>
+                                <p class="bg-[#cce5ff] p-3"></p>
                                 {% elif value == 2 %}
-                                <rect width="40" height="40" fill="#99ccff"></rect>
-                                {% elif value <= 5 %} <rect width="40" height="40" fill="#3399ff">
-                                    </rect>
+                                <p class="bg-[#99ccff] p-3"></p>
+                                {% elif value <= 5 %} 
+                                    <p class="bg-[#3399ff] p-3"></p>
                                     {% else %}
-                                    <rect width="40" height="40" fill="#0066cc"></rect>
+                                    <p class="bg-[#0066cc] p-3"></p>
                                     {% endif %}
                             </svg>
                         </td>
