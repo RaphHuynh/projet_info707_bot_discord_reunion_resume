@@ -100,7 +100,7 @@ def member_to_user(ctx, user_id):
         )
     else:
         user = User(
-            id=member.id,
+            id=user_id,
             discord_tag="unknown",
             avatar="unknown",
             global_name="unknown",
