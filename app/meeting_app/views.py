@@ -56,7 +56,7 @@ def create_heatmap_image(heatmap, start_date):
 
     # Configuration des axes
     ax.set_yticks(range(7))  # 7 jours par semaine
-    ax.set_yticklabels(["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"], fontsize=10)  # Jours
+    ax.set_yticklabels(["Sun",  "Sat", "Fri", "Thu", "Wed", "Tue", "Mon"], fontsize=10)  # Jours
     ax.set_xticks(range(53))  # 53 semaines
     ax.set_xticklabels(range(1, 54), fontsize=8)  # Numéros des semaines
 
