@@ -5,8 +5,8 @@ Sum'App - Summary
 
 {% block main %}
 
-<section class="px-20 flex flex-col min-h-screen">
-    <h1 class="text-5xl font-bold text-center pt-10 text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-sky-500 to-green-500">{{ summary.title }}</h1>
+<section class="px-20 flex flex-col min-h-screen mb-10">
+    <h1 class="text-5xl font-bold text-center pt-10 text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-sky-500 to-green-500 pb-2">{{ summary.title }}</h1>
     <p class="text-center italic mb-10 text-slate-500">{{ summary.date }}</p>
 
     <article class="flex gap-4">
@@ -21,7 +21,7 @@ Sum'App - Summary
                 {% endfor %}
             </div>
         </div>
-        <div class="bg-slate-50 p-10 shadow">
+        <div class="bg-slate-50 p-10 shadow min-w-2/3">
             <h2 class="text-sky-500 text-2xl font-bold text-center mb-4">Résumé</h2>
             <p class="text-justify">{{ summary.text_sum_up }}</p>
         </div>
@@ -31,11 +31,14 @@ Sum'App - Summary
         <h2 class="text-sky-500 text-2xl font-bold text-center mb-4">Transcription complète</h2>
         {% for message in summary.messages.all %}
         {% if message.author.id == user.id %}
-        <p class="bg-cyan-500 px-4 py-2 text-white rounded-xl w-fit text-lg shadow-lg mt-2">{{ message.content }} </p>
-        <p class="text-sm text-slate-500 italic mt-2">{{ message.date }} {{ message.author.global_name }}</p>
+        <p class="bg-gradient-to-r from-cyan-400 via-sky-500 to-green-500 px-5 py-3 text-white rounded-full w-fit text-lg shadow-lg mt-2 mr-0 ml-auto">{{ message.content }}</p>
+        <p class="text-sm text-slate-500 italic mt-2 mr-0 ml-auto">{{ message.date }} {{ message.author.global_name }}</p>
         {% else %}
-        <p class="bg-slate-800 px-4 py-2 text-white rounded-xl w-fit text-lg mr-0 ml-auto shadow-lg mt-2">{{ message.content }} </p>
-        <p class="text-sm text-slate-500 italic mr-0 ml-auto mt-2">{{ message.date }} {{ message.author.global_name }}</p>
+        <aside class="flex gap-2 items-center mt-2">
+            <img src="https://cdn.discordapp.com/avatars/{{ message.author.id }}/{{ message.author.avatar }}" class="w-10 rounded-full"></img>
+            <p class="bg-gradient-to-r from-cyan-50 via-sky-100 to-green-100 px-5 py-3 text-black rounded-full w-fit text-lg shadow-lg">{{ message.content }} </p>
+        </aside>
+        <p class="text-sm text-slate-500 italic mt-2">{{ message.date }} {{ message.author.global_name }}</p>
         {% endif %}
         {% endfor %}
     </article>
