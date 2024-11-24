@@ -125,7 +125,7 @@ def profile(request):
     total_meetings = my_summaries.count()
     
     # Récupérer les 6 dernières réunions, triées par date décroissante
-    recent_meetings = my_summaries.order_by('-date')[:6]
+    recent_meetings = my_summaries.order_by('-date')[:4]
     
     # Récupérer toutes les dates de réunion pour générer la heatmap
     meeting_dates = list(my_summaries.values_list("date", flat=True))
