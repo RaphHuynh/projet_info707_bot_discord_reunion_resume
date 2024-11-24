@@ -17,7 +17,7 @@ async def handle_finished_recording(sink, ctx, title):
     transcriptions = transcribe_audio(sink)
     messages = messages_from_transcriptions(transcriptions)
     attendees = users_from_audio_data(ctx, sink.audio_data)
-    author = member_to_user(ctx.guild.get_member(ctx.author.id))
+    author = member_to_user(ctx, ctx.guild.get_member(ctx.author.id))
 
     resume = Resume(
         date=messages[0].date,
@@ -88,7 +88,8 @@ def messages_from_transcriptions(transcriptions):
     return messages
 
 
-def member_to_user(member):
+def member_to_user(ctx, user_id):
+    member = ctx.guild.get_member(user_id)
     if member:
         avatar = str(member.avatar).split("/")[-1].split(".png")[0]
         user = User(
@@ -110,8 +111,7 @@ def member_to_user(member):
 def users_from_audio_data(ctx, audio_data):
     users = []
     for user_id in audio_data.keys():
-        member = ctx.guild.get_member(user_id)
-        user = member_to_user(member)
+        user = member_to_user(ctx, user_id)
         users.append(user)
     return users
 
