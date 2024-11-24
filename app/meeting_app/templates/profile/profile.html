@@ -64,25 +64,25 @@ Sum'App - Profile
                 </thead>
                 <tbody>
                     {% for line, day in heatmap %}
-                    <tr class="h-[13px]">
+                    <tr class="h-[2px]">
                         <!-- Colonne avec les jours -->
-                        <td class="ContributionCalendar-day p-0 text-right pr-2" style="font-size: 8px;">
+                        <td class="ContributionCalendar-day p-0 text-right pr-2 text-[12px] font-bold flex items-center">
                             {{ day }}
                         </td>
                         <!-- Colonnes de la heatmap -->
                         {% for value in line %}
-                        <td class="ContributionCalendar-day w-[13px] h-[13px] p-0 relative">
-                            <svg class="absolute left-0 top-0 w-[10px] h-[10px]">
+                        <td class="ContributionCalendar-day w-[35px] h-[27px] p-0 relative">
+                            <svg class="absolute left-0 top-0 w-[20px] h-[20px]">
                                 {% if value == 0 %}
-                                <rect width="10" height="10" fill="#ebedf0"></rect>
+                                <rect width="40" height="40" fill="#ebedf0"></rect>
                                 {% elif value == 1 %}
-                                <rect width="10" height="10" fill="#cce5ff"></rect>
+                                <rect width="40" height="40" fill="#cce5ff"></rect>
                                 {% elif value == 2 %}
-                                <rect width="10" height="10" fill="#99ccff"></rect>
-                                {% elif value <= 5 %} <rect width="10" height="10" fill="#3399ff">
+                                <rect width="40" height="40" fill="#99ccff"></rect>
+                                {% elif value <= 5 %} <rect width="40" height="40" fill="#3399ff">
                                     </rect>
                                     {% else %}
-                                    <rect width="10" height="10" fill="#0066cc"></rect>
+                                    <rect width="40" height="40" fill="#0066cc"></rect>
                                     {% endif %}
                             </svg>
                         </td>
