@@ -71,19 +71,21 @@ Sum'App - Profile
                         </td>
                         <!-- Colonnes de la heatmap -->
                         {% for value in line %}
-                        <td class="ContributionCalendar-day relative">
-                                {% if value == 0 %}
-                                <p class="bg-[#ebedf0] p-3"></p>
-                                {% elif value == 1 %}
-                                <p class="bg-[#cce5ff] p-3"></p>
-                                {% elif value == 2 %}
-                                <p class="bg-[#99ccff] p-3"></p>
-                                {% elif value <= 5 %} 
-                                    <p class="bg-[#3399ff] p-3"></p>
-                                    {% else %}
-                                    <p class="bg-[#0066cc] p-3"></p>
-                                    {% endif %}
-                            </svg>
+                        <td class="ContributionCalendar-day relative group">
+                            {% if value == 0 %}
+                            <p class="bg-[#f7f7f7] p-3 rounded"></p>
+                            {% elif value == 1 %}
+                            <p class="bg-[#cce5ff] p-3 rounded"></p>
+                            {% elif value == 2 %}
+                            <p class="bg-[#99ccff] p-3 rounded"></p>
+                            {% elif value <= 5 %} <p class="bg-[#3399ff] p-3 rounded">
+                                </p>
+                                {% else %}
+                                <p class="bg-[#0066cc] p-3 rounded"></p>
+                                {% endif %}
+                                <span
+                                    class="invisible group-hover:visible absolute bg-black text-white text-xs rounded py-1 px-2 bottom-full mb-1">
+                                    {{ value }}</span>
                         </td>
                         {% endfor %}
                     </tr>
