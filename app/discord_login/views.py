@@ -7,12 +7,12 @@ from django.contrib.auth.decorators import user_passes_test
 auth_url_discord = "https://discord.com/oauth2/authorize?client_id=1305611546755338291&response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A8000%2Foauth2%2Flogin%2Fredirect&scope=identify"
 
 
-@user_passes_test(test_func=lambda u: not u.is_authenticated, login_url="/oauth2/login")
+@user_passes_test(test_func=lambda u: not u.is_authenticated, login_url="/")
 def discord_login(request: HttpRequest):
     return redirect(auth_url_discord)
 
 
-@user_passes_test(test_func=lambda u: not u.is_authenticated, login_url="/oauth2/login")
+@user_passes_test(test_func=lambda u: not u.is_authenticated, login_url="/")
 def discord_login_redirect(request: HttpRequest):
     code = request.GET.get("code")
     print(code)
@@ -24,7 +24,7 @@ def discord_login_redirect(request: HttpRequest):
     return redirect("/")
 
 
-@user_passes_test(test_func=lambda u: u.is_authenticated, login_url="/oauth2/login")
+@user_passes_test(test_func=lambda u: u.is_authenticated, login_url="/")
 def discord_logout(request: HttpRequest):
     logout(request)
     return redirect("/")
