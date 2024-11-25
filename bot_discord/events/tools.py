@@ -3,18 +3,107 @@ import datetime
 import whisper
 from lib.models import Message, User
 import sqlite3
+from transformers import pipeline
+
+
+def transcribe_audio(sink):
+    temp_dir = "./temp_audio_files"
+    os.makedirs(temp_dir, exist_ok=True)
+
+    model = whisper.load_model("large-v3-turbo")
+
+    transcriptions = []
+
+    for user_id, audio in sink.audio_data.items():
+        file_path = os.path.join(temp_dir, f"{user_id}.wav")
+        with open(file_path, "wb") as f:
+            f.write(audio.file.read())
+
+        result = model.transcribe(file_path, language="fr")
+
+        for segment in result["segments"]:
+            transcriptions.append(
+                {
+                    "user_id": user_id,
+                    "start": segment["start"],
+                    "end": segment["end"],
+                    "text": segment["text"],
+                }
+            )
+
+    transcriptions.sort(key=lambda x: x["start"])
+    return transcriptions
+
+
+def messages_from_transcriptions(transcriptions):
+    messages = []
+    for segment in transcriptions:
+        messages.append(
+            Message(
+                author_id=segment["user_id"],
+                date=datetime.datetime.now(),
+                duration=datetime.timedelta(
+                    seconds=segment["end"] - segment["start"]
+                ).total_seconds(),
+                content=segment["text"],
+            )
+        )
+    messages.sort(key=lambda x: x.date)
+    return messages
+
+
+def member_to_user(member):
+    if not isinstance(member, int):
+        avatar = str(member.avatar).split("/")[-1].split(".png")[0]
+        user = User(
+            id=member.id,
+            discord_tag=member.discriminator,
+            avatar=avatar,
+            global_name=member.global_name,
+        )
+    else:
+        user = User(
+            id=member,
+            discord_tag="unknown",
+            avatar="unknown",
+            global_name="unknown",
+        )
+    return user
+
+
+def users_from_audio_data(ctx, audio_data):
+    users = []
+    for user_id in audio_data.keys():
+        user = member_to_user(user_id)
+        users.append(user)
+    return users
+
+
+def formated_transcription(ctx, transcriptions):
+    transcription_text = []
+    for idx, segment in enumerate(transcriptions, start=1):
+        user = ctx.guild.get_member(segment["user_id"])
+        if user:
+            user_name = user.name
+        else:
+            user_name = f"Utilisateur {segment['user_id']}"
+
+        transcription_text.append(
+            f"{idx}. [{user_name}] ({segment['start']:.2f}-{segment['end']:.2f}s): {segment['text']}"
+        )
+
+    return transcription_text
 
 
 def save_users_to_db(sqlite_connection, users):
     users_id = []
     for user in users:
-        print(f"Saving user {user.global_name}")
-
         user_exist = sqlite_connection.execute(
             f"SELECT * FROM discord_login_discorduser WHERE id = {user.id}"
         ).fetchone()
         if user_exist:
             continue
+        print(f"Saving user {user.global_name}")
         sqlite_connection.execute(
             f"INSERT INTO discord_login_discorduser (id, discord_tag, avatar, global_name) VALUES ({user.id}, '{user.discord_tag}', '{user.avatar}', '{user.global_name.replace("'", "''")}')"
         )
@@ -73,89 +162,17 @@ def save_to_db(resume):
     sqlite_connection.commit()
 
 
-def transcribe_audio(sink):
-    temp_dir = "./temp_audio_files"
-    os.makedirs(temp_dir, exist_ok=True)
-
-    model = whisper.load_model("large-v3-turbo")
-
-    transcriptions = []
-
-    for user_id, audio in sink.audio_data.items():
-        file_path = os.path.join(temp_dir, f"{user_id}.wav")
-        with open(file_path, "wb") as f:
-            f.write(audio.file.read())
-
-        result = model.transcribe(file_path, language="fr")
-
-        for segment in result["segments"]:
-            transcriptions.append(
-                {
-                    "user_id": user_id,
-                    "start": segment["start"],
-                    "end": segment["end"],
-                    "text": segment["text"],
-                }
-            )
-
-    transcriptions.sort(key=lambda x: x["start"])
-    return transcriptions
+def messages_to_text(messages):
+    text = ""
+    for message in messages:
+        text += "-" + message.content + "\n"
+    return text
 
 
-def messages_from_transcriptions(transcriptions):
-    messages = []
-    for segment in transcriptions:
-        messages.append(
-            Message(
-                author_id=segment["user_id"],
-                date=datetime.datetime.now(),
-                duration=datetime.timedelta(seconds=segment["end"] - segment["start"]),
-                content=segment["text"],
-            )
-        )
-    messages.sort(key=lambda x: x.date)
-    return messages
+def summarize(text):
+    summarizer = pipeline("summarization", model="facebook/bart-large-cnn")
 
+    summary = summarizer(text, max_length=130, min_length=30)
 
-def member_to_user(member):
-    if member:
-        avatar = str(member.avatar).split("/")[-1].split(".png")[0]
-        user = User(
-            id=member.id,
-            discord_tag=member.discriminator,
-            avatar=avatar,
-            global_name=member.global_name,
-        )
-    else:
-        user = User(
-            id=member.id,
-            discord_tag="unknown",
-            avatar="unknown",
-            global_name="unknown",
-        )
-    return user
+    return summary
 
-
-def users_from_audio_data(ctx, audio_data):
-    users = []
-    for user_id in audio_data.keys():
-        member = ctx.guild.get_member(user_id)
-        user = member_to_user(member)
-        users.append(user)
-    return users
-
-
-def formated_transcription(ctx, transcriptions):
-    transcription_text = []
-    for idx, segment in enumerate(transcriptions, start=1):
-        user = ctx.guild.get_member(segment["user_id"])
-        if user:
-            user_name = user.name
-        else:
-            user_name = f"Utilisateur {segment['user_id']}"
-
-        transcription_text.append(
-            f"{idx}. [{user_name}] ({segment['start']:.2f}-{segment['end']:.2f}s): {segment['text']}"
-        )
-
-    return "\n".join(transcription_text)
