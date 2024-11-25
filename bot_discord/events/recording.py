@@ -46,4 +46,7 @@ async def handle_finished_recording(sink, ctx, title):
             await ctx.send(f"```{text}```")
             text = answer + "\n"
     await ctx.send(f"```{text}```")
+
+    await ctx.send("Summary of the meeting:")
+    await ctx.send(f"```{sum_up}```")
     save_to_db(resume)
