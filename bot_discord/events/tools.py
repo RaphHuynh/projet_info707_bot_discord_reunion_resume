@@ -172,7 +172,7 @@ def messages_to_text(messages):
 def summarize(text):
     summarizer = pipeline("summarization", model="facebook/bart-large-cnn")
 
-    summary = summarizer(text, max_length=130, min_length=30)
+    summary = summarizer(text, max_length=200, min_length=50)
 
     return summary
 
