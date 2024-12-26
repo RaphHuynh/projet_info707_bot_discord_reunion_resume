@@ -170,9 +170,9 @@ def messages_to_text(messages):
 
 
 def summarize(text):
-    summarizer = pipeline("summarization", model="facebook/bart-large-cnn")
+    summarizer = pipeline("summarization", model="t5-base", tokenizer="t5-base")
 
-    summary = summarizer(text, max_length=200, min_length=10)
+    summary = summarizer(text, max_length=200, min_length=50)
 
     return summary
 

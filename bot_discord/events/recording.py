@@ -24,7 +24,8 @@ async def handle_finished_recording(sink, ctx, title):
     messages = messages_from_transcriptions(transcriptions)
     attendees = users_from_audio_data(ctx, sink.audio_data)
     author = member_to_user(ctx.guild.get_member(ctx.author.id))
-    sum_up = summarize(messages_to_text(messages))[0]["summary_text"]
+    answers = formated_transcription(ctx, transcriptions)
+    sum_up = summarize("\n".join(answers))[0]["summary_text"]
 
     resume = Resume(
         date=messages[0].date,
