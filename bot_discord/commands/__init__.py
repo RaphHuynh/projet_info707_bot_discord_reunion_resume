@@ -6,6 +6,7 @@ from .stop_recording import stop_recording_command
 from .schedule import schedule_command
 from .generate_resume_pdf import generate_resume_pdf_command
 from .generate_messages_pdf import generate_message_pdf_command
+from .generate_all_pdf import generate_all_pdf_command
 
 
 def register_commands(bot):
@@ -17,3 +18,4 @@ def register_commands(bot):
     bot.add_application_command(schedule_command)
     bot.add_application_command(generate_resume_pdf_command)
     bot.add_application_command(generate_message_pdf_command)
+    bot.add_application_command(generate_all_pdf_command)

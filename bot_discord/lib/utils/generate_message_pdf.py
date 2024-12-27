@@ -43,7 +43,6 @@ def generate_pdf_for_message(messages, title,output_file):
         pdf.ln(5)
         pdf.set_text_color(10,10,10)
         pdf.multi_cell(200,5,f"{message['message']}")
-        pdf.ln(1)
-        
+        pdf.ln(1) 
     
     pdf.output(output_file)
