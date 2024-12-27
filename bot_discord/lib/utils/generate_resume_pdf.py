@@ -43,7 +43,7 @@ def generate_pdf_for_resume(resume, output_file):
     # Ajouter la liste des participants
     pdf.set_font("Arial", 'B', 12)
     pdf.set_text_color(0, 102, 204)  # Couleur pour le titre "Participants"
-    pdf.cell(200, 10, txt="Participants:", ln=True, align="L")
+    pdf.multi_cell(200, 10, txt="Participants:", ln=True, align="L")
     pdf.set_font("Arial", "I", size=12)
     pdf.set_text_color(0, 0, 0)  # Noir pour la liste des participants
 

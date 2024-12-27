@@ -46,3 +46,24 @@ def fetch_titles_by_user(sqlite_connection, user_id):
     """
     results = sqlite_connection.execute(query, (user_id,)).fetchall()
     return [result[0] for result in results]
+
+def fetch_messages_by_resume_title(sqlite_connection, title):
+    query = """
+        SELECT u.discord_tag, m.content, m.date
+        FROM meeting_app_resume r
+        JOIN meeting_app_resume_messages rm ON r.id = rm.resume_id
+        JOIN meeting_app_message m ON rm.message_id = m.id
+        JOIN discord_login_discorduser u ON m.author_id = u.id
+        WHERE r.title = ?
+    """
+    results = sqlite_connection.execute(query, (title,)).fetchall()
+    
+    # Retourner une liste de dictionnaires contenant discord_tag, message, et datetime
+    return [
+        {
+            "discord_tag": result[0],
+            "message": result[1],
+            "datetime": result[2]
+        }
+        for result in results
+    ]

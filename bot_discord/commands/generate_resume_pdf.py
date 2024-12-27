@@ -21,10 +21,10 @@ async def autocomplete_titles(ctx: discord.AutocompleteContext):
 
 # Commande slash pour générer un PDF de réunion spécifique
 @slash_command(
-    name="generate_pdf",
-    description="Generate a PDF of a specific meeting summary by title."
+    name="generate_resume_pdf",
+    description="Generate a PDF with resume of a specific meeting summary by title."
 )
-async def generate_pdf_command(
+async def generate_resume_pdf_command(
     ctx,
     title: discord.Option(str, "Title of the meeting", autocomplete=basic_autocomplete(autocomplete_titles))
 ):
