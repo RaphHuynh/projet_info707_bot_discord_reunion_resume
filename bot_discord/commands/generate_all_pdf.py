@@ -1,5 +1,6 @@
 import discord
 import sqlite3
+import os
 from discord import slash_command
 from lib import *
 
@@ -27,9 +28,10 @@ async def generate_all_pdf_command(
             return
         
         output_file = f"meeting_{title}_{user_id}.pdf"
-        generate_pdf_for_all(messages, resume,title,output_file)
+        generate_pdf_for_all(messages, resume, title, output_file)
         
         await ctx.respond(file=discord.File(output_file))
+        os.remove(output_file)
     
     except Exception as e:
         await ctx.respond(f"An error occured; {str(e)}")

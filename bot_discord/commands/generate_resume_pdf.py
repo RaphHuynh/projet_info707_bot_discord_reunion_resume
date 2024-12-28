@@ -1,4 +1,5 @@
 import discord
+import os
 from discord import slash_command
 from discord.utils import basic_autocomplete
 import sqlite3
@@ -44,6 +45,7 @@ async def generate_resume_pdf_command(
 
         # Envoyer le fichier PDF en réponse
         await ctx.respond(file=discord.File(output_file))
+        os.remove(output_file)
 
     except Exception as e:
         await ctx.respond(f"An error occurred: {str(e)}")

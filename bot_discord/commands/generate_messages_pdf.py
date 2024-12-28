@@ -1,5 +1,6 @@
 import discord
 import sqlite3
+import os
 from discord import slash_command
 from lib import *
 
@@ -25,6 +26,7 @@ async def generate_message_pdf_command(
         generate_pdf_for_message(messages, title,output_file)
         
         await ctx.respond(file=discord.File(output_file))
+        os.remove(output_file)
         
         
     except Exception as e:
