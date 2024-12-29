@@ -30,22 +30,61 @@ Sum'App - Summary
     <article class="w-full flex flex-col bg-slate-50 mt-4 p-10 shadow">
         <h2 class="text-sky-500 text-2xl font-bold text-center mb-4">Transcription complète</h2>
         {% for message in summary.messages.all %}
-        {% if message.author.id == user.id %}
-        <p class="bg-gradient-to-r from-cyan-400 via-sky-500 to-green-500 px-5 py-3 text-white rounded-full w-fit text-lg shadow-lg mt-2 mr-0 ml-auto">{{ message.content }}</p>
-        <p class="text-sm text-slate-500 italic mt-2 mr-0 ml-auto">{{ message.date }} {{ message.author.global_name }}</p>
-        {% else %}
-        <aside class="flex gap-2 items-center mt-2">
-            <img src="https://cdn.discordapp.com/avatars/{{ message.author.id }}/{{ message.author.avatar }}" class="w-10 rounded-full"></img>
-            <p class="bg-gradient-to-r from-cyan-50 via-sky-100 to-green-100 px-5 py-3 text-black rounded-full w-fit text-lg shadow-lg">{{ message.content }} </p>
-        </aside>
+        <p class="bg-gradient-to-r from-cyan-50 via-sky-100 to-green-100 px-5 py-3 text-black rounded-full w-fit text-lg shadow-lg">{{ message.content }}</p>
         <p class="text-sm text-slate-500 italic mt-2">{{ message.date }} {{ message.author.global_name }}</p>
-        {% endif %}
         {% endfor %}
     </article>
+
+    <section class="flex flex-col items-center mt-8 gap-4">
+        <h2 class="text-sky-500 text-2xl font-bold text-center mb-4">Exporter en PDF</h2>
+        <button onclick="generatePDF()" class="bg-purple-500 text-white px-6 py-2 rounded shadow hover:bg-purple-600">
+            Télécharger Résumé + Transcription PDF
+        </button>
+    </section>
 
     <div class="mx-auto bg-black text-white px-4 py-2 rounded mt-10">
         <a href="javascript:history.back()">Back</a>
     </div>
-
 </section>
+
+<script>
+    function generatePDF() {
+        const resume = {
+            title: "{{ summary.title }}",
+            date: "{{ summary.date }}",
+            duration: "{{ summary.duration }}",
+            attendees: "{{ summary.attendees|safe }}",
+            text_sum_up: "{{ summary.text_sum_up }}",
+        };
+
+        fetch("{% url 'generate_pdf_combined_view' %}", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRFToken": "{{ csrf_token }}"
+            },
+            body: JSON.stringify({ resume })
+        })
+        .then(response => {
+            if (response.ok) {
+                return response.blob();
+            } else {
+                throw new Error("Erreur lors de la génération du PDF");
+            }
+        })
+        .then(blob => {
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = "combined_summary.pdf";
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+        })
+        .catch(error => {
+            console.error(error);
+            alert("Une erreur s'est produite lors de la génération du PDF.");
+        });
+    }
+</script>
 {% endblock %}

@@ -2,6 +2,11 @@ from django.shortcuts import render, redirect
 from .models import Resume
 from .graph import generate_heatmap
 from django.contrib.auth.decorators import user_passes_test
+from django.http import JsonResponse, FileResponse
+from django.views.decorators.csrf import csrf_exempt
+import json
+from .lib import generate_pdf_for_all
+import os
 
 
 def home(request):
@@ -81,3 +86,44 @@ def summary(request, id):
         return redirect("/summaries/")
 
     return render(request, "summaries/summary.html", {"summary": summary})
+
+
+@csrf_exempt
+def generate_pdf_combined_view(request):
+    if request.method == "POST":
+        try:
+            # Récupérer les données JSON envoyées par la requête
+            data = json.loads(request.body)
+            
+            # Vérifier que les données sont bien présentes
+            resume = data.get("resume", None)
+            if not resume:
+                return JsonResponse({"error": "Resume data is missing"}, status=400)
+
+            # Nom du fichier PDF à générer
+            output_file = "combined_summary.pdf"
+
+            # Appeler une fonction pour générer le PDF (vous devez définir cette fonction)
+            # Vous devrez probablement ajuster la fonction generate_pdf_for_all selon vos besoins
+            generate_pdf_for_all(resume, output_file)
+            
+            # Vérifier si le fichier a bien été généré
+            if not os.path.exists(output_file):
+                return JsonResponse({"error": "Failed to generate the PDF file."}, status=500)
+
+            # Retourner le fichier PDF en réponse à l'utilisateur
+            response = FileResponse(open(output_file, 'rb'), content_type='application/pdf')
+            response['Content-Disposition'] = f'attachment; filename="{output_file}"'
+
+            # Supprimer le fichier PDF après l'envoi
+            os.remove(output_file)
+            return response
+
+        except json.JSONDecodeError:
+            return JsonResponse({"error": "Invalid JSON format."}, status=400)
+        except Exception as e:
+            # Gérer d'autres erreurs
+            return JsonResponse({"error": str(e)}, status=500)
+    
+    # Si la méthode n'est pas POST
+    return JsonResponse({"error": "Invalid request method"}, status=405)
