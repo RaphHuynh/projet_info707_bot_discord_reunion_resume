@@ -5,22 +5,19 @@ from discord.utils import basic_autocomplete
 import sqlite3
 from lib import *
 
-# Fonction d'autocomplétion pour les titres des réunions
-async def autocomplete_titles(ctx: discord.AutocompleteContext):
+async def autocomplete_titles(ctx):
     try:
         sqlite_connection = sqlite3.connect("../app/db.sqlite3")
-        user_id = ctx.author.id
+        user_id = ctx.interaction.user.id
         titles = fetch_titles_by_user(sqlite_connection, user_id)
         sqlite_connection.close()
 
-        # Filtrer les titres par l'entrée de l'utilisateur
-        user_input = ctx.options['title']  # Récupérer l'input de l'utilisateur
+        user_input = ctx.options['title']
         suggestions = [title for title in titles if user_input.lower() in title.lower()]
         return suggestions
     except Exception as e:
         return []
 
-# Commande slash pour générer un PDF de réunion spécifique
 @slash_command(
     name="generate_resume_pdf",
     description="Generate a PDF with resume of a specific meeting summary by title."
@@ -44,7 +41,7 @@ async def generate_resume_pdf_command(
         generate_pdf_for_resume(resume, output_file)
 
         # Envoyer le fichier PDF en réponse
-        await ctx.respond(file=discord.File(output_file))
+        await ctx.respond(file=discord.File(output_file), ephemeral=True)
         os.remove(output_file)
 
     except Exception as e:
