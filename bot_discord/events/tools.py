@@ -1,6 +1,7 @@
 import os
 import datetime
 import whisper
+from torch import bfloat16
 from lib.models import Message, User
 import sqlite3
 from transformers import pipeline
@@ -162,17 +163,53 @@ def save_to_db(resume):
     sqlite_connection.commit()
 
 
-def messages_to_text(messages):
+def messages_to_text(messages, users):
+    users_dict = {user.id: user for user in users}
     text = ""
     for message in messages:
-        text += "-" + message.content + "\n"
+        text += f"{users_dict[message.author_id].global_name} : {message.content}\n"
     return text
 
 
+def split_text(text, max_tokens=512):
+    sentences = text.split(". ")
+    chunks = []
+    current_chunk = []
+    current_length = 0
+
+    for sentence in sentences:
+        sentence_length = len(sentence.split())
+        if current_length + sentence_length <= max_tokens:
+            current_chunk.append(sentence)
+            current_length += sentence_length
+        else:
+            chunks.append(". ".join(current_chunk))
+            current_chunk = [sentence]
+            current_length = sentence_length
+
+    if current_chunk:
+        chunks.append(". ".join(current_chunk))
+    return chunks
+
+
 def summarize(text):
-    summarizer = pipeline("summarization", model="t5-base", tokenizer="t5-base")
+    model_id = "meta-llama/Llama-3.2-3B-Instruct"
+    pipe = pipeline(
+        "text-generation",
+        model=model_id,
+        torch_dtype=bfloat16,
+        device_map="auto",
+    )
+    messages = [
+        {
+            "role": "system",
+            "content": "Fais un bon résumé de la conversation. La réponse ne doit comporter uniquement le résumé, sous le format suivant : Résumé : ...",
+        },
+        {"role": "user", "content": text},
+    ]
+    outputs = pipe(
+        messages,
+        max_new_tokens=256,
+    )
 
-    summary = summarizer(text, max_length=200, min_length=50)
-
-    return summary
-
+    return outputs[0]["generated_text"][-1]["content"].split("Résumé :")[-1].strip()
