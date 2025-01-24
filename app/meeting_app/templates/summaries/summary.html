@@ -61,13 +61,13 @@ Sum'App - Summary
             attendees_name.push("{{ attendee.id }}");
         }
         else {
-            attendees_name.push("{{ attendee.global_name }}");
+            attendees_name.push("{{ attendee.discord_tag }}");
         }
         {% endfor %}
 
         messages = [];
         {% for message in summary.messages.all %}
-        messages.push({ 'user': "{{ message.author.global_name }}", 'content': "{{ message.content }}" });
+        messages.push({ 'user': "{{ message.author.discord_tag }}", 'content': "{{ message.content }}" });
         {% endfor %}
 
         const resume = {
