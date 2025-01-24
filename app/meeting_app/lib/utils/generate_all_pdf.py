@@ -49,6 +49,7 @@ def generate_pdf_for_all(resume, output_file):
     pdf.set_font("DejaVuSans", "I", size=12)
     pdf.set_text_color(0, 0, 0)
     pdf.set_fill_color(240, 240, 240)
+    pdf.ln(5)
     participants_text = ", ".join([fix_text(attendee) for attendee in resume["attendees"]])
     pdf.cell(0, 10, txt=participants_text, ln=True, align="L", fill=True)
     pdf.ln(5)
@@ -67,14 +68,17 @@ def generate_pdf_for_all(resume, output_file):
     pdf.set_text_color(0, 102, 204)
     pdf.cell(200, 10, txt="All Messages:", ln=True, align="C")
     pdf.ln(5)
+    
     pdf.set_font("DejaVuSans", size=12)
     for message in resume["messages"]:
         # message[user] and message[content]
         pdf.set_font("DejaVuSans", "I", 12)
         pdf.set_text_color(0, 0, 0)
-        pdf.cell(200, 10, txt=f"{fix_text(message['user'])}", ln=True, align="L")
+        pdf.cell(200, 10, txt=f"{fix_text(message['user'])}")
+        pdf.ln(10)
         pdf.set_font("DejaVuSans", size=12)
         pdf.set_text_color(51, 51, 51)
-        pdf.cell(0, 5, fix_text(message["content"]), align="L")
+        pdf.multi_cell(0, 5, fix_text(message["content"]))
+        pdf.ln(1) 
 
     pdf.output(output_file)
