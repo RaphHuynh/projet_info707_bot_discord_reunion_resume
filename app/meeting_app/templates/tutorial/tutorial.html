@@ -4,5 +4,120 @@ Sum'App - Tutorial
 {% endblock %}
 
 {% block main %}
-<h1>Tutorial Page</h1>
+<section
+    class="flex flex-col items-center justify-center w-full min-h-screen px-10 py-20 bg-gradient-to-r from-indigo-100 via-white to-indigo-100">
+    <div class="w-full max-w-4xl bg-white p-10 rounded-lg shadow-2xl mb-10">
+        <article class="w-full flex flex-col bg-slate-50 p-10 shadow">
+            <p
+                class="bg-gradient-to-r from-cyan-50 via-sky-100 to-green-100 px-5 py-3 text-black rounded-full w-fit text-lg shadow-lg">
+                Salut tout le monde, prêt pour la réunion ?
+            </p>
+            <p class="text-sm text-slate-500 italic mt-2">10:00 AM Utilisateur 1</p>
+            <p
+                class="bg-gradient-to-r from-cyan-50 via-sky-100 to-green-100 px-5 py-3 text-black rounded-full w-fit text-lg shadow-lg">
+                Oui, je vais commencer l'enregistrement. /start Réunion Projet
+            </p>
+            <p class="text-sm text-slate-500 italic mt-2">10:01 AM Utilisateur 2</p>
+            <p
+                class="bg-gradient-to-r from-cyan-50 via-sky-100 to-green-100 px-5 py-3 text-black rounded-full w-fit text-lg shadow-lg">
+                N'oubliez pas de planifier la prochaine réunion. /schedule général 2023-10-15 10:00
+            </p>
+            <p class="text-sm text-slate-500 italic mt-2">10:05 AM Utilisateur 3</p>
+            <p
+                class="bg-gradient-to-r from-cyan-50 via-sky-100 to-green-100 px-5 py-3 text-black rounded-full w-fit text-lg shadow-lg">
+                Enregistrement terminé. /stop_recording
+            </p>
+            <p class="text-sm text-slate-500 italic mt-2">11:00 AM Utilisateur 2</p>
+            <p
+                class="bg-gradient-to-r from-cyan-50 via-sky-100 to-green-100 px-5 py-3 text-black rounded-full w-fit text-lg shadow-lg">
+                Générons le résumé et la transcription. /generate_all_pdf Réunion Projet
+            </p>
+            <p class="text-sm text-slate-500 italic mt-2">11:05 AM Utilisateur 1</p>
+            <p
+                class="bg-gradient-to-r from-cyan-50 via-sky-100 to-green-100 px-5 py-3 text-black rounded-full w-fit text-lg shadow-lg">
+                Quelqu'un se souvient de la commande pour générer uniquement les messages en PDF ?
+            </p>
+            <p class="text-sm text-slate-500 italic mt-2">11:10 AM Utilisateur 3</p>
+            <p
+                class="bg-gradient-to-r from-cyan-50 via-sky-100 to-green-100 px-5 py-3 text-black rounded-full w-fit text-lg shadow-lg">
+                Je ne suis pas sûr, essayons /help pour vérifier.
+            </p>
+            <p class="text-sm text-slate-500 italic mt-2">11:12 AM Utilisateur 2</p>
+            <p
+                class="bg-gradient-to-r from-cyan-50 via-sky-100 to-green-100 px-5 py-3 text-black rounded-full w-fit text-lg shadow-lg">
+                Ah oui, c'est /generate_message_pdf Réunion Projet.
+            </p>
+            <p class="text-sm text-slate-500 italic mt-2">11:15 AM Utilisateur 1</p>
+            <p
+                class="bg-gradient-to-r from-cyan-50 via-sky-100 to-green-100 px-5 py-3 text-black rounded-full w-fit text-lg shadow-lg">
+                Parfait, merci ! Je vais aussi générer le résumé seul. /generate_resume_pdf Réunion Projet
+            </p>
+            <p class="text-sm text-slate-500 italic mt-2">11:20 AM Utilisateur 3</p>
+        </article>
+    </div>
+
+    <div class="w-full max-w-4xl bg-white p-10 rounded-lg shadow-2xl">
+        <h2 class="text-3xl font-extrabold mb-6 text-sky-500">Commandes du Bot</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
+            <div>
+                <span class="font-bold">/join_channel</span> : Permet au bot de rejoindre votre canal vocal.
+            </div>
+            <div>
+                <span class="font-bold">/leave_channel</span> : Fait quitter le canal vocal au bot.
+            </div>
+            <div>
+                <span class="font-bold">/start title</span> : Commence l'enregistrement de la conversation et attribue
+                un titre à l'enregistrement.
+            </div>
+            <div>
+                <span class="font-bold">/stop_recording</span> : Arrête l'enregistrement de la conversation.
+            </div>
+            <div>
+                <span class="font-bold">/schedule channel date time</span> : Planifie une réunion à une date et une
+                heure spécifiées.
+            </div>
+            <div>
+                <span class="font-bold">/generate_all_pdf title</span> : Génère un PDF contenant les transcriptions et
+                le résumé de la réunion.
+            </div>
+            <div>
+                <span class="font-bold">/generate_message_pdf title</span> : Génère un PDF contenant les messages de la
+                réunion.
+            </div>
+            <div>
+                <span class="font-bold">/generate_resume_pdf title</span> : Génère un PDF contenant le résumé de la
+                réunion.
+            </div>
+            <div>
+                <span class="font-bold">/help</span> : Affiche toutes les commandes disponibles.
+            </div>
+        </div>
+
+        <h2 class="text-3xl font-extrabold mb-6 text-sky-500">Utilisation de l'Application Web</h2>
+        <p class="mb-4">
+            Après vous être connecté avec votre compte Discord, vous pouvez accéder à diverses fonctionnalités de
+            l'application web :
+        </p>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
+            <div>
+                <span class="font-bold">Page de Profil</span> : Consultez vos informations Discord et vos réunions
+                récentes.
+            </div>
+            <div>
+                <span class="font-bold">Page des Résumés</span> : Parcourez tous les résumés de réunions disponibles.
+            </div>
+            <div>
+                <span class="font-bold">Page de Résumé Détaillé</span> : Consultez des informations détaillées sur une
+                réunion spécifique, y compris les participants et les messages.
+            </div>
+        </div>
+
+        <h2 class="text-3xl font-extrabold mb-6 text-sky-500">Génération de PDFs</h2>
+        <p class="mb-4">
+            Vous pouvez générer des PDFs de vos résumés et transcriptions de réunions directement depuis l'application
+            web. Il vous suffit de naviguer vers la page de résumé détaillé et de cliquer sur le bouton "Télécharger le
+            PDF Résumé + Transcription".
+        </p>
+    </div>
+</section>
 {% endblock %}
