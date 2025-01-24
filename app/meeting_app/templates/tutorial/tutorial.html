@@ -5,14 +5,15 @@ Sum'App - Tutorial
 
 {% block main %}
 <section
-    class="flex flex-col items-center justify-center w-full min-h-screen px-10 py-20 bg-gradient-to-r from-indigo-100 via-white to-indigo-100">
-    <div class="w-full max-w-4xl bg-white p-10 rounded-lg shadow-2xl mb-10">
-        <article class="w-full flex flex-col bg-slate-50 p-10 shadow">
+    class="flex flex-col items-center justify-center w-full min-h-screen px-10 py-10">
+    <h1 class="text-5xl font-bold text-center py-5 text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-sky-500 to-green-500">Tutoriel</h1>
+    <h2 class="text-3xl font-bold text-cyan-500 pb-10">Exemple d'utilisation du bot discord</h2>
+    <article class="w-full max-w-4xl bg-white p-10 rounded-lg shadow mb-10 bg-slate-50">
             <p
-                class="bg-gradient-to-r from-cyan-50 via-sky-100 to-green-100 px-5 py-3 text-black rounded-full w-fit text-lg shadow-lg">
+                class="bg-gradient-to-r from-cyan-400 via-sky-500 to-green-500 px-5 py-3 text-white rounded-full w-fit text-lg shadow-lg mt-2 mr-0 ml-auto">
                 Salut tout le monde, prêt pour la réunion ?
             </p>
-            <p class="text-sm text-slate-500 italic mt-2">10:00 AM Utilisateur 1</p>
+            <p class="text-sm text-slate-500 italic mt-2 text-right">10:00 AM Utilisateur 1</p>
             <p
                 class="bg-gradient-to-r from-cyan-50 via-sky-100 to-green-100 px-5 py-3 text-black rounded-full w-fit text-lg shadow-lg">
                 Oui, je vais commencer l'enregistrement. /start Réunion Projet
@@ -27,36 +28,36 @@ Sum'App - Tutorial
                 class="bg-gradient-to-r from-cyan-50 via-sky-100 to-green-100 px-5 py-3 text-black rounded-full w-fit text-lg shadow-lg">
                 Enregistrement terminé. /stop_recording
             </p>
-            <p class="text-sm text-slate-500 italic mt-2">11:00 AM Utilisateur 2</p>
+            <p class="text-sm text-slate-500 italic">11:00 AM Utilisateur 2</p>
             <p
-                class="bg-gradient-to-r from-cyan-50 via-sky-100 to-green-100 px-5 py-3 text-black rounded-full w-fit text-lg shadow-lg">
+                class="bg-gradient-to-r from-cyan-400 via-sky-500 to-green-500 px-5 py-3 text-white rounded-full w-fit text-lg shadow-lg mt-2 mr-0 ml-auto">
                 Générons le résumé et la transcription. /generate_all_pdf Réunion Projet
             </p>
-            <p class="text-sm text-slate-500 italic mt-2">11:05 AM Utilisateur 1</p>
+            <p class="text-sm text-slate-500 italic mt-2 text-right">11:05 AM Utilisateur 1</p>
             <p
                 class="bg-gradient-to-r from-cyan-50 via-sky-100 to-green-100 px-5 py-3 text-black rounded-full w-fit text-lg shadow-lg">
                 Quelqu'un se souvient de la commande pour générer uniquement les messages en PDF ?
             </p>
-            <p class="text-sm text-slate-500 italic mt-2">11:10 AM Utilisateur 3</p>
+            <p class="text-sm text-slate-500 italic mt-2 ">11:10 AM Utilisateur 3</p>
             <p
                 class="bg-gradient-to-r from-cyan-50 via-sky-100 to-green-100 px-5 py-3 text-black rounded-full w-fit text-lg shadow-lg">
                 Je ne suis pas sûr, essayons /help pour vérifier.
             </p>
             <p class="text-sm text-slate-500 italic mt-2">11:12 AM Utilisateur 2</p>
             <p
-                class="bg-gradient-to-r from-cyan-50 via-sky-100 to-green-100 px-5 py-3 text-black rounded-full w-fit text-lg shadow-lg">
+                class="bg-gradient-to-r from-cyan-400 via-sky-500 to-green-500 px-5 py-3 text-white rounded-full w-fit text-lg shadow-lg mt-2 mr-0 ml-auto">
                 Ah oui, c'est /generate_message_pdf Réunion Projet.
             </p>
-            <p class="text-sm text-slate-500 italic mt-2">11:15 AM Utilisateur 1</p>
+            <p class="text-sm text-slate-500 italic mt-2 text-right">11:15 AM Utilisateur 1</p>
             <p
                 class="bg-gradient-to-r from-cyan-50 via-sky-100 to-green-100 px-5 py-3 text-black rounded-full w-fit text-lg shadow-lg">
                 Parfait, merci ! Je vais aussi générer le résumé seul. /generate_resume_pdf Réunion Projet
             </p>
             <p class="text-sm text-slate-500 italic mt-2">11:20 AM Utilisateur 3</p>
         </article>
-    </div>
 
-    <div class="w-full max-w-4xl bg-white p-10 rounded-lg shadow-2xl">
+    <h2 class="text-3xl font-bold text-cyan-500 pb-10">Résumé des fonctionnalités</h2>
+    <div class="w-full max-w-4xl bg-slate-50 p-10 rounded-lg shadow">
         <h2 class="text-3xl font-extrabold mb-6 text-sky-500">Commandes du Bot</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
             <div>
