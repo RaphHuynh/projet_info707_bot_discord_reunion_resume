@@ -6,7 +6,9 @@ Sum'App - Summary
 {% block main %}
 
 <section class="px-20 flex flex-col min-h-screen mb-10">
-    <h1 class="text-5xl font-bold text-center pt-10 text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-sky-500 to-green-500 pb-2">{{ summary.title }}</h1>
+    <h1
+        class="text-5xl font-bold text-center pt-10 text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-sky-500 to-green-500 pb-2">
+        {{ summary.title }}</h1>
     <p class="text-center italic mb-10 text-slate-500">{{ summary.date }}</p>
 
     <article class="flex gap-4">
@@ -14,10 +16,11 @@ Sum'App - Summary
             <h2 class="text-sky-500 text-2xl font-bold text-center mb-4">Participants</h2>
             <div class="">
                 {% for attendee in summary.attendees.all %}
-                    <div class="flex items-center mb-2">
-                        <img src="https://cdn.discordapp.com/avatars/{{ attendee.id }}/{{ attendee.avatar }}" class="h-10 w-10 rounded-full mr-2"></img>
-                        <span class="">{{ attendee.global_name }}</span>
-                    </div>
+                <div class="flex items-center mb-2">
+                    <img src="https://cdn.discordapp.com/avatars/{{ attendee.id }}/{{ attendee.avatar }}"
+                        class="h-10 w-10 rounded-full mr-2"></img>
+                    <span class="">{{ attendee.global_name }}</span>
+                </div>
                 {% endfor %}
             </div>
         </div>
@@ -30,7 +33,9 @@ Sum'App - Summary
     <article class="w-full flex flex-col bg-slate-50 mt-4 p-10 shadow">
         <h2 class="text-sky-500 text-2xl font-bold text-center mb-4">Transcription complète</h2>
         {% for message in summary.messages.all %}
-        <p class="bg-gradient-to-r from-cyan-50 via-sky-100 to-green-100 px-5 py-3 text-black rounded-full w-fit text-lg shadow-lg">{{ message.content }}</p>
+        <p
+            class="bg-gradient-to-r from-cyan-50 via-sky-100 to-green-100 px-5 py-3 text-black rounded-full w-fit text-lg shadow-lg">
+            {{ message.content }}</p>
         <p class="text-sm text-slate-500 italic mt-2">{{ message.date }} {{ message.author.global_name }}</p>
         {% endfor %}
     </article>
@@ -49,12 +54,29 @@ Sum'App - Summary
 
 <script>
     function generatePDF() {
+        attendees_name = [];
+        // on dirait que c'est mal codé avec le soulignage rouge, mais promis c'est normal
+        {% for attendee in summary.attendees.all %}
+        if ("{{ attendee.global_name }}" === "unknown") {
+            attendees_name.push("{{ attendee.id }}");
+        }
+        else {
+            attendees_name.push("{{ attendee.global_name }}");
+        }
+        {% endfor %}
+
+        messages = [];
+        {% for message in summary.messages.all %}
+        messages.push({ 'user': "{{ message.author.global_name }}", 'content': "{{ message.content }}" });
+        {% endfor %}
+
         const resume = {
             title: "{{ summary.title }}",
             date: "{{ summary.date }}",
             duration: "{{ summary.duration }}",
-            attendees: "{{ summary.attendees|safe }}",
+            attendees: attendees_name,
             text_sum_up: "{{ summary.text_sum_up }}",
+            messages: messages
         };
 
         fetch("{% url 'generate_pdf_combined_view' %}", {
@@ -65,26 +87,26 @@ Sum'App - Summary
             },
             body: JSON.stringify({ resume })
         })
-        .then(response => {
-            if (response.ok) {
-                return response.blob();
-            } else {
-                throw new Error("Erreur lors de la génération du PDF");
-            }
-        })
-        .then(blob => {
-            const url = window.URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = "combined_summary.pdf";
-            document.body.appendChild(a);
-            a.click();
-            a.remove();
-        })
-        .catch(error => {
-            console.error(error);
-            alert("Une erreur s'est produite lors de la génération du PDF.");
-        });
+            .then(response => {
+                if (response.ok) {
+                    return response.blob();
+                } else {
+                    throw new Error("Erreur lors de la génération du PDF");
+                }
+            })
+            .then(blob => {
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = "combined_summary.pdf";
+                document.body.appendChild(a);
+                a.click();
+                a.remove();
+            })
+            .catch(error => {
+                console.error(error);
+                alert("Une erreur s'est produite lors de la génération du PDF.");
+            });
     }
 </script>
 {% endblock %}

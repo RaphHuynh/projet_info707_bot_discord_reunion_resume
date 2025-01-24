@@ -26,4 +26,4 @@ transformers==4.46.3
 torch==2.5.1 
 accelerate>=0.26.0
 openai-whisper==20240930
-fpdf==1.7.2
+fpdf2==2.8.2

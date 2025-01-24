@@ -123,6 +123,7 @@ def generate_pdf_combined_view(request):
             return JsonResponse({"error": "Invalid JSON format."}, status=400)
         except Exception as e:
             # Gérer d'autres erreurs
+            print(e)
             return JsonResponse({"error": str(e)}, status=500)
     
     # Si la méthode n'est pas POST
